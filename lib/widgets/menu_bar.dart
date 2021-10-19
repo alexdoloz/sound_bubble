@@ -45,9 +45,16 @@ class _MenuBarState extends State<MenuBar> {
             children: widget.items.mapIndexed(
               (index, item) => GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                child: item,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 250),
+                  opacity: selectedIndex == index ? 1 : 0.7,
+                  child: item,
+                ),
                 onTap: () {
-                  widget.onTap(index);
+                  setState(() {
+                    selectedIndex = index;
+                    widget.onTap(index);
+                  });
                 },
               ),
             ).toList(),

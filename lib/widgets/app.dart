@@ -32,7 +32,10 @@ class _AppState extends State<App> {
         body: Column(
           children: [
             Expanded(
-              child: pages[_selectedPageIndex],
+              child: AnimatedSwitcher(
+                duration: Duration(milliseconds: 250),
+                child: pages[_selectedPageIndex],
+              ),
             ),
             MenuBar(
               showsDivider: true,

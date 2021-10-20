@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 
 import 'package:flutter/material.dart';
 import 'package:sound_bubble/utils/palette.dart';
-import 'package:sound_bubble/widgets/menu_bar_item.dart';
+import 'package:sound_bubble/widgets/components/menu_bar_item.dart';
 
 class MenuBar extends StatefulWidget {
   final List<MenuBarItem> items;
@@ -17,7 +17,7 @@ class MenuBar extends StatefulWidget {
     int selectedIndex = 0,
     this.showsDivider = false,
     required this.onTap,
-  })  : initialSelectedIndex = selectedIndex,
+  }) : initialSelectedIndex = selectedIndex,
         super(key: key);
 
   @override
@@ -40,7 +40,7 @@ class _MenuBarState extends State<MenuBar> {
           height: 57,
           color: Palette.menuBarBackground,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: widget.items.mapIndexed(
               (index, item) => GestureDetector(
@@ -48,7 +48,7 @@ class _MenuBarState extends State<MenuBar> {
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 250),
                   opacity: selectedIndex == index ? 1 : 0.7,
-                  child: item,
+                  child: Expanded(flex: 1, child: item),
                 ),
                 onTap: () {
                   setState(() {

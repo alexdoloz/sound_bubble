@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sound_bubble/widgets/app.dart';
+import 'custom_icon.dart';
 
 class MenuBarItem extends StatelessWidget {
   final CustomIcon icon;

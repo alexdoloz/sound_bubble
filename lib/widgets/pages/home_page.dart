@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sound_bubble/utils/palette.dart';
+import 'package:sound_bubble/widgets/components/track_item.dart';
+import 'package:sound_bubble/widgets/components/track_item_button.dart';
 
 // TODO: Убрать
 var labelStyle = TextStyle(
@@ -14,9 +16,68 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Palette.homePageBackground,
-      child: Center(
-        child: Text("Home", style: labelStyle,),
-      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: ListView(
+          children: [
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+            ),
+            const SizedBox(height: 15),
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+            ),
+            const SizedBox(height: 15),
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+            ),
+            const SizedBox(height: 15),
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+            ),
+            const SizedBox(height: 15),
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+            ),
+            const SizedBox(height: 15),
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+            ),
+            const SizedBox(height: 15),
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.delete, TrackItemButtonType.more],
+            ),
+            const SizedBox(height: 15),
+            TrackItem(
+              title: "Cadillac",
+              subtitle: "MORGENSHTERN & Элджей",
+              thumbnail: Image.network('https://via.placeholder.com/54x54'),
+              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+            ),
+          ],
+        ),
+      )
     );
   }
 }

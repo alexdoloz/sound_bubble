@@ -32,7 +32,12 @@ class TrackItem extends StatelessWidget {
     final subtitleStyle = GoogleFonts.roboto(
       fontWeight: FontWeight.normal,
       fontSize: 14,
-      color: Color(0xffcbcbcb),
+      color: const Color(0xffcbcbcb),
+    );
+    final orderStyle = GoogleFonts.roboto(
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
+      color: Colors.white,
     );
     return SizedBox(
       height: 54,
@@ -42,7 +47,14 @@ class TrackItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           if (order != null)
-            ...[Text(order!), const SizedBox(width: 10,)],
+            ...[
+              Text(
+                order!, 
+                textAlign: TextAlign.center, 
+                style: orderStyle,
+              ), 
+              const SizedBox(width: 10,)
+            ],
           SizedBox(
             width: 54,
             height: 54,
@@ -52,7 +64,7 @@ class TrackItem extends StatelessWidget {
               child: thumbnail,
             ),
           ),
-          SizedBox(width: 13,),
+          const SizedBox(width: 13,),
           Expanded(
             flex: 1,
             child: Column(

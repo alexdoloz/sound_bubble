@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
               subtitle: "MORGENSHTERN & Элджей",
               thumbnail: Image.network('https://via.placeholder.com/54x54'),
               actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+              order: "1",
             ),
             const SizedBox(height: 15),
             TrackItem(
@@ -32,6 +33,7 @@ class HomePage extends StatelessWidget {
               subtitle: "MORGENSHTERN & Элджей",
               thumbnail: Image.network('https://via.placeholder.com/54x54'),
               actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+              order: "2",
             ),
             const SizedBox(height: 15),
             TrackItem(
@@ -39,6 +41,7 @@ class HomePage extends StatelessWidget {
               subtitle: "MORGENSHTERN & Элджей",
               thumbnail: Image.network('https://via.placeholder.com/54x54'),
               actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+              order: "3",
             ),
             const SizedBox(height: 15),
             TrackItem(

@@ -29,12 +29,19 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Soundbubble",
+      theme: ThemeData(
+        colorScheme: ColorScheme.light(
+          primary: Color(0xff91a2f8)
+        ).copyWith(secondary: Color(0xff91a2f8)),
+      ),
       home: Scaffold(
         backgroundColor: Palette.homePageBackground,
         body: SafeArea(
           bottom: false,
           left: false,
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: AnimatedSwitcher(

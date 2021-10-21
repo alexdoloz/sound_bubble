@@ -43,19 +43,22 @@ class _MenuBarState extends State<MenuBar> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: widget.items.mapIndexed(
-              (index, item) => GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 250),
-                  opacity: selectedIndex == index ? 1 : 0.7,
-                  child: Expanded(flex: 1, child: item),
+              (index, item) => Expanded(
+                flex: 1,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 250),
+                    opacity: selectedIndex == index ? 1 : 0.7,
+                    child: item,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = index;
+                      widget.onTap(index);
+                    });
+                  },
                 ),
-                onTap: () {
-                  setState(() {
-                    selectedIndex = index;
-                    widget.onTap(index);
-                  });
-                },
               ),
             ).toList(),
           ),

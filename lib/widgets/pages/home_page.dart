@@ -14,72 +14,23 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final items = List.generate(10, (index) => index).expand((index) => 
+      [
+        TrackItem(
+          title: "Cadillac",
+          subtitle: "MORGENSHTERN & Элджей",
+          thumbnail: Image.network('https://picsum.photos/54'),
+          actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
+          order: "${index+1}",
+        ),
+        const SizedBox(height: 15),
+      ]
+    );
+    
     return Container(
       color: Palette.homePageBackground,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: ListView(
-          children: [
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
-              order: "1",
-            ),
-            const SizedBox(height: 15),
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
-              order: "2",
-            ),
-            const SizedBox(height: 15),
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
-              order: "3",
-            ),
-            const SizedBox(height: 15),
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
-            ),
-            const SizedBox(height: 15),
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
-            ),
-            const SizedBox(height: 15),
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
-            ),
-            const SizedBox(height: 15),
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.delete, TrackItemButtonType.more],
-            ),
-            const SizedBox(height: 15),
-            TrackItem(
-              title: "Cadillac",
-              subtitle: "MORGENSHTERN & Элджей",
-              thumbnail: Image.network('https://via.placeholder.com/54x54'),
-              actionTypes: const [TrackItemButtonType.add, TrackItemButtonType.more],
-            ),
-          ],
-        ),
+      child: ListView(
+        children: items.toList(),
       )
     );
   }

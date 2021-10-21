@@ -48,10 +48,14 @@ class TrackItem extends StatelessWidget {
         children: [
           if (order != null)
             ...[
-              Text(
-                order!, 
-                textAlign: TextAlign.center, 
-                style: orderStyle,
+              SizedBox(
+                width: 32,
+                child: Text(
+                  order!, 
+                  textAlign: TextAlign.right, 
+                  style: orderStyle,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ), 
               const SizedBox(width: 10,)
             ],
@@ -86,6 +90,7 @@ class TrackItem extends StatelessWidget {
               }
             ),
           ])),
+          const SizedBox(width: 24,),
         ],
       ),
     );

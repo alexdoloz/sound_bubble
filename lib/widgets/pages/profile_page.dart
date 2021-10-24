@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sound_bubble/utils/palette.dart';
 
+import '../app.dart';
+
 // TODO: Убрать
 var labelStyle = TextStyle(
   color: Colors.white,
@@ -16,7 +18,12 @@ class ProfilePage extends StatelessWidget {
     return Container(
       color: Palette.homePageBackground,
       child: Center(
-        child: Text("Profile", style: labelStyle,),
+        child: ElevatedButton(
+          child: Text("Log out"), 
+          onPressed: () {
+            appLogic.signOut();
+          },
+        ),
       ),
     );
   }

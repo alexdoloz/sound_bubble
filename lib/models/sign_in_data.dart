@@ -1,5 +1,9 @@
 class SignInData {
-  String? login;
-  String? password;
-  
+  String login;
+  String password; 
+
+  SignInData({ 
+    required this.login, 
+    required this.password 
+  });
 }

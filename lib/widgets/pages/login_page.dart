@@ -1,9 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sound_bubble/models/sign_in_data.dart';
-
+import 'package:sound_bubble/widgets/components/background_button.dart';
+import 'package:sound_bubble/widgets/components/gradient_button.dart';
 import '../app.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,165 +13,107 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
-    final headerStyle = GoogleFonts.montserrat(
-      color: Color(0xffdddddd),
-      fontWeight: FontWeight.bold,
-      fontSize: 32,
-    );
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text("Log In", style: headerStyle),
-                  Spacer(flex: 1,),
-                  Image.asset("assets/images/logo.png"),
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              TextField(
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: BorderSide.none,
-                  ),
-      
-                  fillColor: Color.fromARGB(255, 77, 77, 77),
-                  focusColor: Colors.white,
-                  filled: true,
-                  hintText: "Enter Your Email",
-                  hintStyle: GoogleFonts.montserrat(
-                    fontSize: 11,
-                    color: Colors.white,
-                  ),
-                ),
-                onSubmitted: (login) {
-                  print("Login: $login");
-                },
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              TextField(
+  String login = "";
+  String password = "";
 
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: BorderSide.none,
-                  ),
-      
-                  fillColor: Color.fromARGB(255, 77, 77, 77),
+  static const box16 = SizedBox(
+    height: 16,
+  );
 
-                  filled: true,
-                  hintText: "Enter Your Password",
-                  hintStyle: GoogleFonts.montserrat(
-                    fontSize: 11,
-                    color: Colors.white,
-                  ),
-                ),
-                obscureText: true,
-                onSubmitted: (login) {
-                  print("Login: $login");
-                },
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: LoginButton(),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: SignUpButton(),
-                  ),
-                ],
-              )
-            ],
-          )
-        ),
-      ),
+  static const Gradient signUpGradient = LinearGradient(
+    colors: [
+      Color.fromARGB(255, 216, 124, 226),
+      Color.fromARGB(255, 199, 62, 81),
+    ],
+    transform: GradientRotation(pi / 3)
+  );
+
+  signIn() {
+    appLogic.signIn(
+      SignInData(
+        login: login,
+        password: password
+      )
     );
   }
-}
-
-class LoginButton extends StatelessWidget {
-  const LoginButton({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      child: Text("Log In"),
-      style: TextButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        backgroundColor: Color(0xff4961ca),
-        textStyle: GoogleFonts.montserrat(
-          fontSize: 12.8,
-          fontWeight: FontWeight.bold,
-        ),
-        minimumSize: Size.fromHeight(40),
-        maximumSize: Size.fromHeight(40),
-        primary: Colors.white,
-      ),
-      onPressed: () {
-        appLogic.signIn(SignInData(login: "123", password: "123"));
-      }
-    );
-  }
-}
-
-class SignUpButton extends StatelessWidget {
-  const SignUpButton({ Key? key }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Gradient gr = LinearGradient(
-      colors: [
-        Color.fromARGB(255, 216, 124, 226),
-        Color.fromARGB(255, 199, 62, 81),
-      ],
-      transform: GradientRotation(pi / 3)
-    );
-    return ElevatedButton(
-      onPressed: () { },
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-        padding: const EdgeInsets.all(0.0),
-      ),
-      child: Ink(
-        decoration: BoxDecoration(
-          gradient: gr,
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-        ),
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 40.0), // min sizes for Material buttons
-          alignment: Alignment.center,
-          child: Text(
-            'Create new account',
-            style: GoogleFonts.montserrat(
-              fontSize: 12.8,
-              fontWeight: FontWeight.bold,
+    final theme = Theme.of(context);
+    final passwordFocusNode = FocusNode();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Log In", style: Theme.of(context).textTheme.headline2),
+                const Spacer(flex: 1,),
+                Image.asset("assets/images/logo.png"),
+              ],
             ),
-            textAlign: TextAlign.center,
-          ),
-        ),
+            box16,
+            TextField(
+              enableSuggestions: false,
+              autocorrect: false,
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              keyboardAppearance: Brightness.dark,
+              decoration: const InputDecoration(
+                hintText: "Enter Your Email",
+              ).applyDefaults(theme.inputDecorationTheme),
+              onChanged: (login) {
+                this.login = login;
+              },
+              onSubmitted: (_) {
+                FocusScope.of(context).requestFocus(passwordFocusNode);
+              },
+            ),
+            box16,
+            TextField(
+              keyboardAppearance: Brightness.dark,
+              textInputAction: TextInputAction.go,
+              decoration: const InputDecoration(
+                hintText: "Enter Your Password"
+              ).applyDefaults(theme.inputDecorationTheme),
+              focusNode: passwordFocusNode,
+              obscureText: true,
+              onChanged: (password) {
+                this.password = password;
+              },
+              onSubmitted: (_) {
+                signIn();
+              },
+            ),
+            box16,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: BackgroundButton(
+                    backgroundColor: const Color(0xff4961ca),
+                    title: "Log In",
+                    onPressed: signIn,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: GradientButton(
+                    gradient: signUpGradient,
+                    onPressed: () {
+                      print("Sign up");
+                    },
+                    title: 'Create new account',                    
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )
       ),
     );
   }
 }
-

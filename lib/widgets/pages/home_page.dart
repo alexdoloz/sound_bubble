@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sound_bubble/utils/palette.dart';
 import 'package:sound_bubble/widgets/components/track_item.dart';
 import 'package:sound_bubble/widgets/components/track_item_button.dart';
-
-// TODO: Убрать
-var labelStyle = TextStyle(
-  color: Colors.white,
-  fontSize: 54.0,
-);
 
 class HomePage extends StatelessWidget {
   const HomePage({ Key? key }) : super(key: key);
@@ -27,11 +20,8 @@ class HomePage extends StatelessWidget {
       ]
     );
     
-    return Container(
-      color: Palette.homePageBackground,
-      child: ListView(
-        children: items.toList(),
-      )
+    return ListView(
+      children: items.toList(),
     );
   }
 }

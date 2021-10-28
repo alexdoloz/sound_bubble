@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sound_bubble/utils/palette.dart';
 
-// TODO: Убрать
-var labelStyle = TextStyle(
-  color: Colors.white,
-  fontSize: 54.0,
-);
-
 class MusicPage extends StatelessWidget {
   const MusicPage({ Key? key }) : super(key: key);
 
@@ -14,8 +8,8 @@ class MusicPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Palette.homePageBackground,
-      child: Center(
-        child: Text("Music", style: labelStyle,),
+      child: const Center(
+        child: Text("Music"),
       ),
     );
   }

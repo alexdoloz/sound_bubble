@@ -24,7 +24,7 @@ class TrackItemButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       padding: EdgeInsets.zero,
-      constraints: BoxConstraints(),
+      constraints: const BoxConstraints(),
 
       onPressed: onPressed, 
       icon: Icon(_icons[type], size: 24, color: Colors.white,),

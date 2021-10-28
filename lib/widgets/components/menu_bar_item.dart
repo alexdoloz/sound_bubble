@@ -12,7 +12,6 @@ class MenuBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 40,
       height: 32,
       child: Container(
         alignment: Alignment.center,

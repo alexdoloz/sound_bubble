@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:collection/collection.dart';
-
 import 'package:flutter/material.dart';
-import 'package:sound_bubble/utils/palette.dart';
 import 'package:sound_bubble/widgets/components/menu_bar_item.dart';
 
 class MenuBar extends StatefulWidget {
@@ -29,41 +26,31 @@ class _MenuBarState extends State<MenuBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (widget.showsDivider)
-          Container(
-            height: 1,
-            color: Palette.menuBarDivider,
-          ),
-        Container(
-          height: 57,
-          color: Palette.menuBarBackground,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: widget.items.mapIndexed(
-              (index, item) => Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 250),
-                    opacity: selectedIndex == index ? 1 : 0.7,
-                    child: item,
-                  ),
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                      widget.onTap(index);
-                    });
-                  },
-                ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: widget.items.mapIndexed(
+        (index, item) => Expanded(
+          flex: 1,
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 250),
+                opacity: selectedIndex == index ? 1 : 0.7,
+                child: item,
               ),
-            ).toList(),
+            ),
+            onTap: () {
+              setState(() {
+                selectedIndex = index;
+                widget.onTap(index);
+              });
+            },
           ),
-        )
-      ],
+        ),
+      ).toList(),
     );
   }
 }

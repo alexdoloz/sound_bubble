@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sound_bubble/logic/app_logic.dart';
 import 'package:sound_bubble/widgets/components/menu_bar.dart';
 import 'package:sound_bubble/widgets/components/menu_bar_item.dart';
@@ -9,7 +8,7 @@ import 'package:sound_bubble/widgets/pages/music_page.dart';
 import 'package:sound_bubble/widgets/pages/profile_page.dart';
 import 'package:sound_bubble/widgets/pages/search_page.dart';
 import 'components/custom_icon.dart';
-import 'pages/login_page.dart';
+import 'pages/prelogin_zone/prelogin_zone.dart';
 import 'theme.dart';
 
 class App extends StatefulWidget {
@@ -29,32 +28,8 @@ class _AppState extends State<App> {
       builder: (context, bool isLoggedIn, __) =>
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),
-          child: isLoggedIn ? const TabbedApp() : const PreloginApp(),
+          child: isLoggedIn ? const TabbedApp() : const PreloginZone(),
         )
-    );
-  }
-}
-
-class PreloginApp extends StatefulWidget {
-  const PreloginApp({ Key? key }) : super(key: key);
-
-  @override
-  _PreloginAppState createState() => _PreloginAppState();
-}
-
-class _PreloginAppState extends State<PreloginApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Soundbubble",
-      theme: AppTheme.theme,
-      home: Builder(
-        builder: (context) {
-          return const Scaffold(
-            body: LoginPage(),
-          );
-        }
-      ),
     );
   }
 }
@@ -107,31 +82,3 @@ class _TabbedAppState extends State<TabbedApp> {
     );
   }
 }
-
-// class PostLogin extends StatefulWidget {
-//   const PostLogin({ Key? key }) : super(key: key);
-
-//   @override
-//   State<PostLogin> createState() => _PostLoginState();
-// }
-
-// class _PostLoginState extends State<PostLogin> {
-//   final pages = const <Widget>[
-//     HomePage(),
-//     MusicPage(),
-//     SearchPage(),
-//     ChatPage(),
-//     ProfilePage(),
-//   ];
-
-//   var _selectedPageIndex = 0;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: AnimatedSwitcher(
-//         duration: Duration(milliseconds: 500),
-//         child: pages[_selectedPageIndex],
-//       ),
-//     );
-//   }
-// }

@@ -1,8 +1,17 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static final circularBorder = BorderRadius.circular(15.0);
+
+  static const buttonGradient = LinearGradient(
+    colors: [
+      Color.fromARGB(255, 216, 124, 226),
+      Color.fromARGB(255, 199, 62, 81),
+    ],
+    transform: GradientRotation(pi / 3)
+  );
 
   static final theme = ThemeData(
     primaryColor: const Color(0xff91a2f8),
@@ -75,8 +84,8 @@ class AppTheme {
         color: Colors.white,
       ),
     ),
-    textSelectionTheme: TextSelectionThemeData(
-      cursorColor: const Color(0xff91a2f8),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Color(0xff91a2f8),
     ),
   );
 }

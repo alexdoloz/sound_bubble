@@ -1,40 +1,32 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sound_bubble/models/sign_in_data.dart';
 import 'package:sound_bubble/widgets/components/background_button.dart';
 import 'package:sound_bubble/widgets/components/gradient_button.dart';
-import '../app.dart';
+import '../../theme.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({ Key? key }) : super(key: key);
+  final Function(SignInData) onSignIn;
+  final VoidCallback onSignUp;
+
+  const LoginPage({ 
+    Key? key,
+    required this.onSignIn,
+    required this.onSignUp,
+  }) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String login = "";
-  String password = "";
+  final signInData = SignInData(login: "", password: "");
 
   static const box16 = SizedBox(
     height: 16,
   );
 
-  static const Gradient signUpGradient = LinearGradient(
-    colors: [
-      Color.fromARGB(255, 216, 124, 226),
-      Color.fromARGB(255, 199, 62, 81),
-    ],
-    transform: GradientRotation(pi / 3)
-  );
-
   signIn() {
-    appLogic.signIn(
-      SignInData(
-        login: login,
-        password: password
-      )
-    );
+    widget.onSignIn(signInData);
   }
 
   @override
@@ -66,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Enter Your Email",
               ).applyDefaults(theme.inputDecorationTheme),
               onChanged: (login) {
-                this.login = login;
+                signInData.login = login;
               },
               onSubmitted: (_) {
                 FocusScope.of(context).requestFocus(passwordFocusNode);
@@ -82,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
               focusNode: passwordFocusNode,
               obscureText: true,
               onChanged: (password) {
-                this.password = password;
+                signInData.password = password;
               },
               onSubmitted: (_) {
                 signIn();
@@ -102,10 +94,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: GradientButton(
-                    gradient: signUpGradient,
-                    onPressed: () {
-                      print("Sign up");
-                    },
+                    gradient: AppTheme.buttonGradient,
+                    onPressed: widget.onSignUp,
                     title: 'Create new account',                    
                   ),
                 ),

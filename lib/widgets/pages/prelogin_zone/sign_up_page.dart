@@ -133,38 +133,46 @@ class _SignUpPageState extends State<SignUpPage> {
               ],
             ),
             box16,
-            Row(
-              children: [
-                Expanded(
-                  child: BackgroundButton(
-                    backgroundColor: const Color(0xffae67ef),
-                    title: "Upload photo",
-                    onPressed: () {
-                      print("Upload photo");
-                    },
+            SizedBox(
+              height: 40,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: BackgroundButton(
+                      backgroundColor: const Color(0xffae67ef),
+                      title: "Upload photo",
+                      onPressed: () {
+                        print("Upload photo");
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            box16,
-            Row(
-              children: [
-                Expanded(
-                  child: BackgroundButton(
-                    backgroundColor: const Color(0xff4961ca),
-                    title: "Sign Up",
-                    onPressed: signUp,
+            const SizedBox(height: 8,),
+            SizedBox(
+              height: 40,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: BackgroundButton(
+                      backgroundColor: const Color(0xff4961ca),
+                      title: "Sign Up",
+                      onPressed: signUp,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: GradientButton(
-                    gradient: AppTheme.buttonGradient,
-                    onPressed: widget.onAlreadyHaveAccount,
-                    title: 'Already registered',
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: GradientButton(
+                      gradient: AppTheme.buttonGradient,
+                      onPressed: widget.onAlreadyHaveAccount,
+                      title: 'Already registered',
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         )

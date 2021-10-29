@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sound_bubble/logic/app_logic.dart';
+import 'package:sound_bubble/logic/firebase_app_logic.dart';
 import 'package:sound_bubble/widgets/components/menu_bar.dart';
 import 'package:sound_bubble/widgets/components/menu_bar_item.dart';
 import 'package:sound_bubble/widgets/pages/chat_page.dart';
@@ -18,17 +19,17 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-AppLogic appLogic = FakeAppLogic();
+AppLogic appLogic = FirebaseAppLogic();
 
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: appLogic.isLoggedIn,
-      builder: (context, bool isLoggedIn, __) =>
+      valueListenable: appLogic.userState,
+      builder: (context, UserState userState, __) =>
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 250),
-          child: isLoggedIn ? const TabbedApp() : const PreloginZone(),
+          child: userState == UserState.postLogin? const TabbedApp() : const PreloginZone(),
         )
     );
   }

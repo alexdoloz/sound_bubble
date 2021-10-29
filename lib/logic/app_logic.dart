@@ -2,29 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:sound_bubble/models/sign_in_data.dart';
 import 'package:sound_bubble/models/sign_up_data.dart';
 
-abstract class AppLogic {
-  final isLoggedIn = ValueNotifier(false);
+enum UserState {
+  beforeSetup, preLogin, postLogin
+}
 
-  signIn(SignInData signInData);
-  signUp(SignUpData signUpData);
-  signOut();
+abstract class AppLogic {
+  final userState = ValueNotifier(UserState.beforeSetup);
+
+  Future<void> setup();
+  Future<void> signIn(SignInData signInData);
+  Future<void> signUp(SignUpData signUpData);
+  Future<void> signOut();
 }
 
 class FakeAppLogic extends AppLogic {
+  
   @override
-  signIn(SignInData signInData) {
+  Future<void> signIn(SignInData signInData) async {
     print("Logged in with login ${signInData.login} and password ${signInData.password}");
-    isLoggedIn.value = true;
+
+    // isLoggedIn.value = true;
   }
 
   @override
-  signOut() {
-    isLoggedIn.value = false;
+  Future<void> signOut() async {
+    // isLoggedIn.value = false;
   }
 
   @override
-  signUp(SignUpData signUpData) {
+  Future<void> signUp(SignUpData signUpData) async {
     print("Signed up as ${signUpData.name} with login ${signUpData.login} and password ${signUpData.password}");
-    isLoggedIn.value = true;
+    // isLoggedIn.value = true;
+  }
+
+  @override
+  Future<void> setup() async {
+    // TODO: implement setup
+    throw UnimplementedError();
   }
 }

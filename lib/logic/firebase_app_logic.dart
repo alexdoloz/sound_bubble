@@ -9,75 +9,109 @@ class FirebaseAppLogic extends AppLogic {
   get _auth => FirebaseAuth.instance;
   get _firestore => FirebaseFirestore.instance;
 
+  performNetworking({
+    LoadingId loadingId = LoadingId.other,
+    required Function() networkingClosure,
+    required Function(Exception exception) errorHandler,
+  }) async {
+    startLoading(loadingId: loadingId);
+    try {
+      await networkingClosure();
+    } on Exception catch (exception) {
+      stopLoading(loadingId: loadingId);
+      errorHandler(exception);
+    }
+    stopLoading(loadingId: loadingId);
+  }
+
   @override
   Future<void> signIn(SignInData signInData) async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: signInData.login,
-      password: signInData.password,
+    performNetworking(
+      networkingClosure: () async {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: signInData.login,
+          password: signInData.password,
+        );
+      }, 
+      errorHandler: (exception) {
+        // TODO: Handle errors
+      }
     );
   }
 
   @override
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    performNetworking(
+      networkingClosure: () async => await FirebaseAuth.instance.signOut(), 
+      errorHandler: (exception) {
+        // TODO: Handle errors
+      }
+    );
   }
 
   @override
   Future<void> signUp(SignUpData signUpData) async {
-    final userCredential = await _auth.createUserWithEmailAndPassword(
-      email: signUpData.login, 
-      password: signUpData.password
+    performNetworking(
+      networkingClosure: () async {
+        final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: signUpData.login, 
+        password: signUpData.password
+      );
+      final user = userCredential.user;
+      if (user == null) {
+        // TODO: Handle error
+        return;
+      }
+      final uid = user.uid;
+      await _firestore.collection('users')
+        .doc(uid)
+        .set({
+          'uid': uid,
+          'displayName': signUpData.name,
+          'photoURL': "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/music-icon-mohammed-jabir-ap.jpg", // TODO: Исправить логику
+          'isAuthor': signUpData.isArtist,
+          'isVerified': signUpData.isArtist, // TODO: Уточнить
+          'numberOfListenersPerMonth': 0,
+          'ownSongs': [],
+          'ownPlaylists': [],
+          'addedSongs': [],
+          'addedPlaylists': [],
+          'addedAuthors': [],
+          'lastSongPlayed': "",
+          'chats': [],
+          'friends': [],
+          'subscribers': 0,
+          'regDate': DateTime.now(),
+          'imageColors': List.generate(6, (_) => '#e6671e'), // TODO: Использовать palette_generator
+        });
+      await _firestore
+        .collection('search')
+        .doc(uid)
+        .set({
+          'place': 'users',
+          'uid': uid,
+          'rank': 0,
+          // TODO: variantsOfName
+        });
+
+      await _firestore
+        .collection('searchHistory')
+        .doc(uid)
+        .set({
+          'history': [],
+        });
+
+      await _firestore
+        .collection('history')
+        .doc(uid)
+        .set({
+          'history': [],
+        });
+      }, 
+      errorHandler: (exception) {
+        // TODO: HAndle errors
+      }
     );
-    final user = userCredential.user;
-    if (user == null) {
-      // TODO: Handle error
-      return;
-    }
-    final uid = user.uid;
-    await _firestore.collection('users')
-      .doc(uid)
-      .set({
-        'uid': uid,
-        'displayName': signUpData.name,
-        'photoURL': "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/music-icon-mohammed-jabir-ap.jpg", // TODO: Исправить логику
-        'isAuthor': signUpData.isArtist,
-        'isVerified': signUpData.isArtist, // TODO: Уточнить
-        'numberOfListenersPerMonth': 0,
-        'ownSongs': [],
-        'ownPlaylists': [],
-        'addedSongs': [],
-        'addedPlaylists': [],
-        'addedAuthors': [],
-        'lastSongPlayed': "",
-        'chats': [],
-        'friends': [],
-        'subscribers': 0,
-        'regDate': DateTime.now(),
-        'imageColors': List.generate(6, (_) => '#e6671e'), // TODO: Использовать palette_generator
-      });
-    await _firestore
-      .collection('search')
-      .doc(uid)
-      .set({
-        'place': 'users',
-        'uid': uid,
-        'rank': 0,
-        // TODO: variantsOfName
-      });
-
-    await _firestore
-      .collection('searchHistory')
-      .doc(uid)
-      .set({
-        'history': [],
-      });
-
-    await _firestore
-      .collection('history')
-      .doc(uid)
-      .set({
-        'history': [],
-      });
   }
 
   @override

@@ -81,6 +81,13 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             box16,
+            BackgroundButton(
+              title: "GUF", 
+              backgroundColor: Colors.red, 
+              onPressed: () {
+                widget.onSignIn(SignInData(login: 'guf@temp.temp', password: '123456'));
+              }
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

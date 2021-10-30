@@ -139,8 +139,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: BackgroundButton(
-                      backgroundColor: const Color(0xffae67ef),
+                    child: GradientButton(
+                      icon: const Icon(
+                        Icons.cloud_upload_outlined,
+                      ),
+                      gradient: AppTheme.buttonGradient2,
                       title: "Upload photo",
                       onPressed: () {
                         print("Upload photo");

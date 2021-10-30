@@ -4,12 +4,14 @@ class BackgroundButton extends StatelessWidget {
   final String title;
   final Color backgroundColor;
   final VoidCallback onPressed;
+  final Icon? icon;
 
   const BackgroundButton({ 
     Key? key,
     required this.title,
     required this.backgroundColor,
     required this.onPressed,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,14 @@ class BackgroundButton extends StatelessWidget {
         height: 40,
         child: Container(
           alignment: Alignment.center,
-          child: Text(title)
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null)
+                ...[icon!, const SizedBox(width: 8,)],
+              Text(title),
+            ],
+          )
         ),
       ),
     );

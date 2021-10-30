@@ -4,12 +4,14 @@ class GradientButton extends StatelessWidget {
   final Gradient gradient;
   final String title;
   final VoidCallback onPressed;
+  final Icon? icon;
 
   const GradientButton({ 
     Key? key,
     required this.title,
     required this.gradient,
     required this.onPressed,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -30,9 +32,16 @@ class GradientButton extends StatelessWidget {
             width: 1000,
             height: 40,
             child: Center(
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null)
+                    ...[icon!, const SizedBox(width: 8,)],
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
           ),

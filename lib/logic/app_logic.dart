@@ -6,13 +6,31 @@ enum UserState {
   beforeSetup, preLogin, postLogin
 }
 
+/// Для одновременного пораза разных анимаций загрузки на экране, когда разные куски данных загружаются одновременно
+enum LoadingId {
+  other
+}
+
 abstract class AppLogic {
   final userState = ValueNotifier(UserState.beforeSetup);
+  final loadingIds = ValueNotifier(<LoadingId>{});
 
   Future<void> setup();
   Future<void> signIn(SignInData signInData);
   Future<void> signUp(SignUpData signUpData);
   Future<void> signOut();
+
+  startLoading({ LoadingId loadingId = LoadingId.other }) {
+    final currentIds = loadingIds.value.toSet();
+    currentIds.add(loadingId);
+    loadingIds.value = currentIds;
+  }
+
+  stopLoading({ LoadingId loadingId = LoadingId.other }) {
+    final currentIds = loadingIds.value.toSet();
+    currentIds.remove(loadingId);
+    loadingIds.value = currentIds;
+  }
 }
 
 class FakeAppLogic extends AppLogic {

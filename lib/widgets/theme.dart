@@ -13,6 +13,14 @@ class AppTheme {
     transform: GradientRotation(pi / 3)
   );
 
+  static const buttonGradient2 = LinearGradient(
+    colors: [
+      Color.fromARGB(255, 133, 45, 229),
+      Color.fromARGB(255, 92, 56, 193),
+    ],
+    transform: GradientRotation(pi / 4)
+  );
+
   static final theme = ThemeData(
     primaryColor: const Color(0xff91a2f8),
     fontFamily: 'Roboto',
@@ -87,5 +95,12 @@ class AppTheme {
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: Color(0xff91a2f8),
     ),
+    iconTheme: const IconThemeData(
+      color: Colors.white,
+    ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      circularTrackColor: Color.fromARGB(255, 199, 62, 81),
+      color: Color.fromARGB(255, 199, 62, 81),
+    )
   );
 }

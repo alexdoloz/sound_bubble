@@ -1,4 +1,4 @@
-package com.example.sound_bubble
+package com.doloz.sound_bubble
 
 import io.flutter.embedding.android.FlutterActivity
 

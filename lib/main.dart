@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'widgets/app.dart';
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-  runApp(const App());
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+  WidgetsFlutterBinding.ensureInitialized();
   await appLogic.setup();
+  runApp(const App());
 }

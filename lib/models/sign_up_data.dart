@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpData {
   String login;
   String password;
   String name;
   bool isArtist = false;
-  FileImage? image;
+  XFile? image;
 
   SignUpData({ 
     required this.login, 

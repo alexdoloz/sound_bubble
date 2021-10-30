@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sound_bubble/models/sign_up_data.dart';
 import 'package:sound_bubble/widgets/components/background_button.dart';
 import 'package:sound_bubble/widgets/components/gradient_button.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../theme.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -145,8 +146,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       gradient: AppTheme.buttonGradient2,
                       title: "Upload photo",
-                      onPressed: () {
-                        print("Upload photo");
+                      onPressed: () async {
+                        try {
+                          final ImagePicker picker = ImagePicker();
+                          signUpData.image = await picker.pickImage(source: ImageSource.gallery);
+                        } catch (exception) {
+                          // TODO: Handle exceptions
+                        }
                       },
                     ),
                   ),

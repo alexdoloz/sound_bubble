@@ -4,10 +4,12 @@ import 'package:sound_bubble/models/sign_in_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseAppLogic extends AppLogic {
-  get _auth => FirebaseAuth.instance;
-  get _firestore => FirebaseFirestore.instance;
+  FirebaseAuth get _auth => FirebaseAuth.instance;
+  FirebaseFirestore get _firestore => FirebaseFirestore.instance;
+  FirebaseStorage get _storage => FirebaseStorage.instance;
 
   performNetworking({
     LoadingId loadingId = LoadingId.other,
@@ -54,60 +56,69 @@ class FirebaseAppLogic extends AppLogic {
     performNetworking(
       networkingClosure: () async {
         final userCredential = await _auth.createUserWithEmailAndPassword(
-        email: signUpData.login, 
-        password: signUpData.password
-      );
-      final user = userCredential.user;
-      if (user == null) {
-        // TODO: Handle error
-        return;
-      }
-      final uid = user.uid;
-      await _firestore.collection('users')
-        .doc(uid)
-        .set({
-          'uid': uid,
-          'displayName': signUpData.name,
-          'photoURL': "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/music-icon-mohammed-jabir-ap.jpg", // TODO: Исправить логику
-          'isAuthor': signUpData.isArtist,
-          'isVerified': signUpData.isArtist, // TODO: Уточнить
-          'numberOfListenersPerMonth': 0,
-          'ownSongs': [],
-          'ownPlaylists': [],
-          'addedSongs': [],
-          'addedPlaylists': [],
-          'addedAuthors': [],
-          'lastSongPlayed': "",
-          'chats': [],
-          'friends': [],
-          'subscribers': 0,
-          'regDate': DateTime.now(),
-          'imageColors': List.generate(6, (_) => '#e6671e'), // TODO: Использовать palette_generator
-        });
-      await _firestore
-        .collection('search')
-        .doc(uid)
-        .set({
-          'place': 'users',
-          'uid': uid,
-          'rank': 0,
-          // TODO: variantsOfName
-        });
+          email: signUpData.login, 
+          password: signUpData.password
+        );
+        final user = userCredential.user;
+        if (user == null) {
+          // TODO: Handle error
+          return;
+        }
+        final uid = user.uid;
+        String photoURL = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/music-icon-mohammed-jabir-ap.jpg";
+        if (signUpData.image != null) {
+          final ref = _storage.ref('usersImages/$uid.jpg');
+          await ref
+            .putData(await signUpData.image!.readAsBytes(), SettableMetadata(contentType: 'image/jpeg'))
+            .resume();
+          photoURL = await ref.getDownloadURL();
+        }
 
-      await _firestore
-        .collection('searchHistory')
-        .doc(uid)
-        .set({
-          'history': [],
-        });
+        await _firestore.collection('users')
+          .doc(uid)
+          .set({
+            'uid': uid,
+            'displayName': signUpData.name,
+            'photoURL': photoURL, // TODO: Исправить логику
+            'isAuthor': signUpData.isArtist,
+            'isVerified': signUpData.isArtist, // TODO: Уточнить
+            'numberOfListenersPerMonth': 0,
+            'ownSongs': [],
+            'ownPlaylists': [],
+            'addedSongs': [],
+            'addedPlaylists': [],
+            'addedAuthors': [],
+            'lastSongPlayed': "",
+            'chats': [],
+            'friends': [],
+            'subscribers': 0,
+            'regDate': DateTime.now(),
+            'imageColors': List.generate(6, (_) => '#e6671e'), // TODO: Использовать palette_generator
+          });
+        await _firestore
+          .collection('search')
+          .doc(uid)
+          .set({
+            'place': 'users',
+            'uid': uid,
+            'rank': 0,
+            // TODO: variantsOfName
+          });
 
-      await _firestore
-        .collection('history')
-        .doc(uid)
-        .set({
-          'history': [],
-        });
-      }, 
+        await _firestore
+          .collection('searchHistory')
+          .doc(uid)
+          .set({
+            'history': [],
+          });
+
+        await _firestore
+          .collection('history')
+          .doc(uid)
+          .set({
+            'history': [],
+          });
+      },
       errorHandler: (exception) {
         // TODO: HAndle errors
       }

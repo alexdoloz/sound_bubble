@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Soundbubble needs access to your gallery to pick the avatar</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Soundbubble needs access to your camera to make new cool selfie for your avatar</string>
 </dict>
 </plist>

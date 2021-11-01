@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:sound_bubble/logic/app_logic.dart';
 import 'package:sound_bubble/models/sign_up_data.dart';
 import 'package:sound_bubble/models/sign_in_data.dart';
@@ -11,24 +13,27 @@ class FirebaseAppLogic extends AppLogic {
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
   FirebaseStorage get _storage => FirebaseStorage.instance;
 
-  performNetworking({
+  Future<void> performNetworking({
     LoadingId loadingId = LoadingId.other,
-    required Function() networkingClosure,
-    required Function(Exception exception) errorHandler,
+    required Future<void> Function() networkingClosure,
+    required Exception? Function(Exception exception) errorHandler,
   }) async {
     startLoading(loadingId: loadingId);
     try {
       await networkingClosure();
     } on Exception catch (exception) {
-      stopLoading(loadingId: loadingId);
       errorHandler(exception);
+      // if (newException != null) {
+      //   throw newException;
+      // }
+    } finally {
+      stopLoading(loadingId: loadingId);
     }
-    stopLoading(loadingId: loadingId);
   }
 
   @override
   Future<void> signIn(SignInData signInData) async {
-    performNetworking(
+    await performNetworking(
       networkingClosure: () async {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: signInData.login,
@@ -36,14 +41,15 @@ class FirebaseAppLogic extends AppLogic {
         );
       }, 
       errorHandler: (exception) {
-        // TODO: Handle errors
+        throw exception;
+        // TODO: Маппинг ошибок
       }
     );
   }
 
   @override
   Future<void> signOut() async {
-    performNetworking(
+    await performNetworking(
       networkingClosure: () async => await FirebaseAuth.instance.signOut(), 
       errorHandler: (exception) {
         // TODO: Handle errors
@@ -53,7 +59,7 @@ class FirebaseAppLogic extends AppLogic {
 
   @override
   Future<void> signUp(SignUpData signUpData) async {
-    performNetworking(
+    await performNetworking(
       networkingClosure: () async {
         final userCredential = await _auth.createUserWithEmailAndPassword(
           email: signUpData.login, 
@@ -61,15 +67,16 @@ class FirebaseAppLogic extends AppLogic {
         );
         final user = userCredential.user;
         if (user == null) {
+          throw Exception("Unknown error");
           // TODO: Handle error
-          return;
         }
         final uid = user.uid;
         String photoURL = "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/music-icon-mohammed-jabir-ap.jpg";
         if (signUpData.image != null) {
           final ref = _storage.ref('usersImages/$uid.jpg');
+          Uint8List imageBytes = await signUpData.image!.readAsBytes();
           await ref
-            .putData(await signUpData.image!.readAsBytes(), SettableMetadata(contentType: 'image/jpeg'))
+            .putData(imageBytes, SettableMetadata(contentType: 'image/jpeg'))
             .resume();
           photoURL = await ref.getDownloadURL();
         }
@@ -79,7 +86,7 @@ class FirebaseAppLogic extends AppLogic {
           .set({
             'uid': uid,
             'displayName': signUpData.name,
-            'photoURL': photoURL, // TODO: Исправить логику
+            'photoURL': photoURL,
             'isAuthor': signUpData.isArtist,
             'isVerified': signUpData.isArtist, // TODO: Уточнить
             'numberOfListenersPerMonth': 0,
@@ -120,14 +127,15 @@ class FirebaseAppLogic extends AppLogic {
           });
       },
       errorHandler: (exception) {
-        // TODO: HAndle errors
+        throw exception;
+        // TODO: Маппинг ошибок
       }
     );
   }
 
   @override
   Future<void> setup() async {
-    await Firebase.initializeApp();
+    await Firebase. initializeApp();
     userState.value = UserState.preLogin;
     FirebaseAuth.instance.userChanges().listen((user) async {
       userState.value = user != null ? UserState.postLogin : UserState.preLogin;

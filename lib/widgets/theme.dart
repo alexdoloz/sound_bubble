@@ -64,7 +64,12 @@ class AppTheme {
         fontWeight: FontWeight.normal,
         color: const Color(0xffcdcdcd),
         fontSize: 14,
-      ),
+      ), 
+      headline5: GoogleFonts.montserrat(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+      )
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

@@ -3,7 +3,6 @@ import 'package:sound_bubble/logic/app_logic.dart';
 import 'package:sound_bubble/widgets/components/overlay_spinner.dart';
 import '../../app.dart';
 import '../../theme.dart';
-import 'loading_page.dart';
 import 'login_page.dart';
 import 'sign_up_page.dart';
 
@@ -19,6 +18,7 @@ class _PreloginAppState extends State<PreloginZone> {
   bool isLoggingIn = true;
   var userState = UserState.beforeSetup;
   var loadingIds = <LoadingId>{};
+  String? error;
   get isLoading => loadingIds.contains(LoadingId.other);
 
   @override
@@ -47,17 +47,30 @@ class _PreloginAppState extends State<PreloginZone> {
     });
   }
 
+  updateError(String? newError) {
+    setState(() {
+      error = newError;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget loginPage = 
       OverlaySpinner(
         isSpinning: isLoading,
         child: LoginPage(
+          error: error,
           onSignIn: (signInData) async {
-            await appLogic.signIn(signInData);
+            updateError(null);
+            try {
+              await appLogic.signIn(signInData);
+            } on Exception catch (e) {
+              updateError(e.toString());
+            }
           }, 
           onSignUp: () {
             setState(() {
+              error = null;
               isLoggingIn = false;
             });
           }
@@ -68,11 +81,18 @@ class _PreloginAppState extends State<PreloginZone> {
       OverlaySpinner(
         isSpinning: isLoading,
         child: SignUpPage(
+          error: error,
           onSignUp: (signUpData) async {
-            await appLogic.signUp(signUpData);
+            updateError(null);
+            try {
+              await appLogic.signUp(signUpData);
+            } on Exception catch (e) {
+              updateError(e.toString());
+            }
           },
           onAlreadyHaveAccount: () {
             setState(() {
+              error = null;
               isLoggingIn = true;
             });
           }

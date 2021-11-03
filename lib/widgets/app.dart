@@ -5,7 +5,7 @@ import 'package:sound_bubble/widgets/components/menu_bar.dart';
 import 'package:sound_bubble/widgets/components/menu_bar_item.dart';
 import 'package:sound_bubble/widgets/pages/chat_page.dart';
 import 'package:sound_bubble/widgets/pages/home_page.dart';
-import 'package:sound_bubble/widgets/pages/music_page.dart';
+import 'package:sound_bubble/widgets/pages/library_page.dart';
 import 'package:sound_bubble/widgets/pages/profile_page.dart';
 import 'package:sound_bubble/widgets/pages/search_page.dart';
 import 'components/custom_icon.dart';
@@ -45,7 +45,7 @@ class TabbedApp extends StatefulWidget {
 class _TabbedAppState extends State<TabbedApp> {
   final pages = const <Widget>[
     HomePage(),
-    MusicPage(),
+    LibraryPage(),
     SearchPage(),
     ChatPage(),
     ProfilePage(),

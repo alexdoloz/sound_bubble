@@ -3,10 +3,18 @@ import 'track.dart';
 
 class TrackQueue {
   List<Track> tracks = [];
-  // List<Artist> 
   List<Color> colors = [];
   DateTime? creationDate;
-  Uri? coverURL;
+  String? coverURL;
   int numberOfListeners = 0;
   String title = "";
+
+  TrackQueue({
+    this.tracks = const [],
+    this.colors = const [],
+    this.creationDate,
+    this.coverURL,
+    this.numberOfListeners = 0,
+    this.title = "",
+  });
 }

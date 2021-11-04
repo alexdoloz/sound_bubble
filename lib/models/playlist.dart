@@ -3,6 +3,9 @@ import 'package:sound_bubble/models/track.dart';
 import 'track_queue.dart';
 
 class Playlist extends TrackQueue {
+  @override
+  get queueType => 'album';
+
   Playlist({
     List<Track> tracks = const [],
     List<Color> colors = const [],

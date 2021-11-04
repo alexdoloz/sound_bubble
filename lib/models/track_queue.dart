@@ -8,6 +8,7 @@ class TrackQueue {
   String? coverURL;
   int numberOfListeners = 0;
   String title = "";
+  get queueType => '';
 
   TrackQueue({
     this.tracks = const [],

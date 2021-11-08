@@ -8,7 +8,16 @@ class Account {
   bool isVerified = false;
   Track? lastPlayedTrack;
   TrackQueue? lastTrackQueue;
-  Uri? avatarURL;
+  String? avatarURL;
+
+  Account({
+    this.colors = const [],
+    this.displayName = "",
+    this.isVerified = false,
+    this.lastPlayedTrack,
+    this.lastTrackQueue,
+    this.avatarURL,
+  });
 
   // TODO: Chats, friends, etc.
 }

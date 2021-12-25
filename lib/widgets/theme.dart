@@ -29,6 +29,21 @@ class AppTheme {
     bottomAppBarTheme: const BottomAppBarTheme(
       color: Color(0xff3f3f3f),
     ),
+    appBarTheme: AppBarTheme(
+      elevation: 10,
+      titleTextStyle: GoogleFonts.montserrat(
+        color: const Color(0xfffafafa),
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: Color.fromARGB(255, 216, 124, 226),
+      elevation: 5,
+    ),
     textTheme: TextTheme(
       headline1: GoogleFonts.roboto(
         color: const Color(0xfffafafa),

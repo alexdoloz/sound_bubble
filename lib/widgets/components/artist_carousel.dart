@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sound_bubble/models/artist.dart';
+import 'package:sound_bubble/utils/widgets+intersperse.dart';
 
 class ArtistCarousel extends StatelessWidget {
   final List<Artist> artists;
@@ -11,10 +12,17 @@ class ArtistCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      alignment: WrapAlignment.start,
-      children: artists.map((artist) => ArtistCarouselItem(artist: artist)).toList(),
+    // ignore: unnecessary_cast
+    final artistCarouselItems = artists
+      .map((artist) => ArtistCarouselItem(artist: artist))
+      .toList() as List<Widget>;
+    return SizedBox(
+      height: 200,
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        children: artistCarouselItems.interspersedWith(const SizedBox(width: 8,)),
+      ),
     );
   }
 }

@@ -12,7 +12,7 @@ class LibraryPage extends StatefulWidget {
 }
 
 class _LibraryPageState extends State<LibraryPage> {
-  var currentTabIndex = 0;
+  var currentTabIndex = 1;
   final tabs = [
     SongsTab(),
     PlaylistsTab(),
@@ -28,21 +28,6 @@ class _LibraryPageState extends State<LibraryPage> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SegmentedControl(
-          onSelectedIndexChanged: (index) {
-            print("Selected index $index");
-            setState(() {
-              currentTabIndex = index;
-            });
-          },
-          selectedIndex: currentTabIndex,
-          tabs: [
-            'Songs',
-            'Playlists',
-            'Authors',
-          ],
-        ),
-        const SizedBox(height: 16,),
         Expanded(
           child: currentTab,
         )

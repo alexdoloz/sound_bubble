@@ -33,6 +33,19 @@ class _TabbedAppState extends State<TabbedApp> {
       title: "Soundbubble",
       theme: AppTheme.theme,
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Library'),
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () { print("Search"); },
+              ),
+            ),
+          ],
+        ),
+
         body: SafeArea(
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 250),
@@ -55,19 +68,35 @@ class _TabbedAppState extends State<TabbedApp> {
           ),
           tooltip: "Create playlist",
         ),
-        bottomNavigationBar: BottomAppBar(
-          child: MenuBar(
-            onTap: (index) {
-              setState(() => _selectedTabIndex = index);
-            },
-            items: const [ 
-              MenuBarItem(icon: CustomIcon.home),
-              MenuBarItem(icon: CustomIcon.music),
-              MenuBarItem(icon: CustomIcon.search),
-              MenuBarItem(icon: CustomIcon.chat),
-              MenuBarItem(icon: CustomIcon.profile),
-            ],
-          ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedTabIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedTabIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              label: "Home",
+              icon: Icon(Icons.home),
+            ),
+            BottomNavigationBarItem(
+              label: "Library",
+              icon: Icon(Icons.music_note),
+            ),
+            BottomNavigationBarItem(
+              label: "Search",
+              icon: Icon(Icons.search),
+            ),
+            BottomNavigationBarItem(
+              label: "Chat",
+              icon: Icon(Icons.chat),
+            ),
+            BottomNavigationBarItem(
+              label: "Profile",
+              icon: Icon(Icons.face),
+            ),
+          ],
         ), 
       ),
     );
